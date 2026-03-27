@@ -1,77 +1,130 @@
-@"
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Site Animado</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site do Amor 🎉</title>
 
 <style>
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(270deg, #ff7e5f, #6a11cb, #00c9ff);
-  background-size: 600% 600%;
-  animation: fundoAnimado 10s ease infinite;
+  background: linear-gradient(270deg, #ff7e5f, #6a11cb);
   color: white;
   text-align: center;
-}
-
-@keyframes fundoAnimado {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  transition: background 0.5s;
 }
 
 .container {
   margin-top: 20%;
-  animation: aparecer 2s ease;
-}
-
-@keyframes aparecer {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-h1 {
-  font-size: 3em;
-}
-
-p {
-  font-size: 1.2em;
 }
 
 button {
   padding: 12px 25px;
   border: none;
-  background: #ffffff;
+  background: white;
   color: #333;
-  font-size: 1em;
   border-radius: 25px;
   cursor: pointer;
-  transition: transform 0.3s, background 0.3s;
+  margin: 10px;
 }
 
-button:hover {
-  transform: scale(1.1);
-  background: #ddd;
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
 }
 </style>
-
 </head>
+
 <body>
 
 <div class="container">
-  <h1>🔥 Olá, Barbosa</h1>
-  <p>Espero que goste da paleta de cores</p>
-  <button onclick="alert('Animação funcionando!')">Testar</button>
+  <h1 id="titulo">🔥 Olá, Barbosa! Tenho uma surpresa para você</h1>
+  <p id="mensagem">Clique nos botões</p>
+
+  <button onclick="mudarTexto()">Clique aqui rapariga</button>
+  <button onclick="trocarCor()">Deixe isso mais animado rapaz</button>
+  <button onclick="comemorar()">🎉 E vamos ficar em clima de festa</button>
+
+  <h2 id="relogio"></h2>
 </div>
+
+<canvas id="confete"></canvas>
+
+<script>
+// ================= TEXTO =================
+function mudarTexto() {
+  document.getElementById("mensagem").innerText =
+    "🔥 VAIIII LAVAR LOUÇAAAAAA AGORAAA JARARACA!";
+}
+
+// ================= COR =================
+function trocarCor() {
+  const cores = ["#ff7e5f", "#6a11cb", "#00c9ff", "#00ff88", "#ff0066"];
+  const cor = cores[Math.floor(Math.random() * cores.length)];
+  document.body.style.background = cor;
+}
+
+// ================= RELÓGIO =================
+function atualizarRelogio() {
+  const agora = new Date();
+  document.getElementById("relogio").innerText =
+    agora.toLocaleTimeString();
+}
+setInterval(atualizarRelogio, 1000);
+
+// ================= CONFETE =================
+const canvas = document.getElementById("confete");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let confetes = [];
+
+function comemorar() {
+  soltarConfete();
+
+  // 📳 Vibração (Android)
+  if (navigator.vibrate) {
+    navigator.vibrate([200, 100, 200]);
+  }
+}
+
+function soltarConfete() {
+  for (let i = 0; i < 150; i++) {
+    confetes.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      size: Math.random() * 8 + 2,
+      speed: Math.random() * 3 + 2,
+      color: `hsl(${Math.random() * 360}, 100%, 50%)`
+    });
+  }
+}
+
+function desenhar() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  confetes.forEach((c, i) => {
+    c.y += c.speed;
+    c.x += Math.sin(c.y * 0.01);
+
+    ctx.fillStyle = c.color;
+    ctx.fillRect(c.x, c.y, c.size, c.size);
+
+    if (c.y > canvas.height) {
+      confetes.splice(i, 1);
+    }
+  });
+
+  requestAnimationFrame(desenhar);
+}
+
+desenhar();
+</script>
 
 </body>
 </html>
-"@ > index.html
