@@ -1,0 +1,77 @@
+@"
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Site Animado</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(270deg, #ff7e5f, #6a11cb, #00c9ff);
+  background-size: 600% 600%;
+  animation: fundoAnimado 10s ease infinite;
+  color: white;
+  text-align: center;
+}
+
+@keyframes fundoAnimado {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.container {
+  margin-top: 20%;
+  animation: aparecer 2s ease;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h1 {
+  font-size: 3em;
+}
+
+p {
+  font-size: 1.2em;
+}
+
+button {
+  padding: 12px 25px;
+  border: none;
+  background: #ffffff;
+  color: #333;
+  font-size: 1em;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.3s, background 0.3s;
+}
+
+button:hover {
+  transform: scale(1.1);
+  background: #ddd;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+  <h1>🔥 Olá, Barbosa</h1>
+  <p>Espero que goste da paleta de cores</p>
+  <button onclick="alert('Animação funcionando!')">Testar</button>
+</div>
+
+</body>
+</html>
+"@ > index.html
